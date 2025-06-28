@@ -1,6 +1,10 @@
 import express from "express";
+import registerUser from "../controller/auth.controller.js";
 
 const authRoutes = express.Router();
+
+authRoutes.post("/register", registerUser
+);
 
 authRoutes.post("/login", (req, res) => {
 	// Handle user login
@@ -9,12 +13,7 @@ authRoutes.post("/login", (req, res) => {
 	res.json({ message: "User logged in successfully", username });
 });
 
-authRoutes.post("/register", (req, res) => {
-	// Handle user registration
-	const { username, password } = req.body;
-	// Logic for user registration goes here
-	res.json({ message: "User registered successfully", username });
-});
+
 
 authRoutes.post("/logout", (req, res) => {
 	// Handle user logout

@@ -10,6 +10,8 @@ import authRoutes from "./routes/auth.route.js";
 import userRoutes from "./routes/user.route.js";
 import todoRoutes from "./routes/todo.route.js";
 import { PORT } from "./config/env.js";
+import connectToDatabase from "./database/mongodb.js";
+import errorMiddleware from "./middleware/error.middleware.js";
 
 
 
@@ -28,6 +30,10 @@ app.get("/", (req, res) => {
 	res.send("Welcome to the To-Do List API");
 });
 
-app.listen(PORT || 5000, () => {
-	console.log(`Server is running on http://localhost:${PORT || 5000}`);
+app.use(errorMiddleware);
+
+app.listen(PORT || 5000, async () => {
+	await  connectToDatabase();
+    console.log(`Server is running on http://localhost:${PORT || 5000}`);
+   
 });
