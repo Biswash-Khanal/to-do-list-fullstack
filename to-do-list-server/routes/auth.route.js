@@ -6,12 +6,8 @@ const authRoutes = express.Router();
 authRoutes.post("/register", registerUser
 );
 
-authRoutes.post("/login", (req, res) => {
-	// Handle user login
-	const { username, password } = req.body;
-	// Logic for user authentication goes here
-	res.json({ message: "User logged in successfully", username });
-});
+authRoutes.post("/login", loginUser
+);
 
 
 
