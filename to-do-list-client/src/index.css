@@ -8,7 +8,9 @@
   --font-roboto: "Roboto Flex", "sans-serif"; 
 
   --color-primary: #F2BFA4; /* Example primary color */
-  --color-secondary: #F5E7DE; /* Example secondary color */
+  --color-secondary: #F5E7DE;
+  --color-font-primary: #7B3F00   ;  /* dark font for text*/
+  --color-font-secondary: #AF8B66  ;   /* light font for text*/
 
   
 
