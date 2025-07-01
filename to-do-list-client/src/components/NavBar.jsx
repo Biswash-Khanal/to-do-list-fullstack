@@ -4,11 +4,11 @@ import { useAppContext } from '../context/AppContext.jsx';
 
 const NavBar = () => {
 
-const {isScrolled, isMenuOpen, setIsMenuOpen} = useAppContext();
+const {isScrolled, isMenuOpen, setIsMenuOpen, setIsLoggedIn, IsLoggedIn} = useAppContext();
 
 
     return (
-        <div className="h-88 md:h-64">
+        
             
             <nav className={`fixed top-0 left-0 bg-primary w-full flex items-center justify-between px-4 md:px-16 lg:px-24 xl:px-32 transition-all duration-500 z-50 ${isScrolled ? "bg-secondary shadow-md text-font-primary backdrop-blur-lg py-3 md:py-4" : "py-4 md:py-6"}`}>
 
@@ -31,8 +31,8 @@ const {isScrolled, isMenuOpen, setIsMenuOpen} = useAppContext();
                 {/* Desktop Right */}
                 <div className="hidden md:flex items-center gap-4">
                     
-                    <button className={`${isScrolled?"bg-primary text-font-secondary":"bg-secondary text-font-primary"}  px-8 py-2.5 rounded-full ml-4 transition-all duration-500 hover:scale-110 cursor-pointer`}>
-                        Login
+                    <button onClick={()=>setIsLoggedIn(false)} className={`${isScrolled?"bg-primary text-font-secondary":"bg-secondary text-font-primary"}  px-8 py-2.5 rounded-full ml-4 transition-all duration-500 hover:scale-110 cursor-pointer`}>
+                        Log-Out
                     </button>
                 </div>
 
@@ -61,12 +61,12 @@ const {isScrolled, isMenuOpen, setIsMenuOpen} = useAppContext();
                     ))}
 
 
-                    <button className="bg-secondary text-font-secondary px-8 py-2.5 rounded-full transition-all duration-500 ">
-                        Login
+                    <button onClick={()=>setIsLoggedIn(false)} className="bg-secondary text-font-secondary px-8 py-2.5 rounded-full transition-all duration-500 cursor-pointer hover:scale-110">
+                        Logout
                     </button>
                 </div>
             </nav>
-        </div>
+      
     );
 }
 

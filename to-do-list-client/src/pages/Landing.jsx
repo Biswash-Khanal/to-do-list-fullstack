@@ -41,7 +41,7 @@ const Landing = () => {
           <h2 className="text-3xl font-semibold text-font-primary mb-6">Why PlanUp?</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-10 mt-10">
             <div className="p-6 rounded-xl bg-white/20 backdrop-blur-sm shadow">
-              <h3 className="text-xl font-semibold text-font-primary mb-2">Simple Interface</h3>
+              <h3 className="text-xl font-semibold text-font-primary mb-2">Simple UI</h3>
               <p className="text-font-secondary">Easily add, edit, and manage your tasks with a clean and intuitive interface.</p>
             </div>
             <div className="p-6 rounded-xl bg-white/20 backdrop-blur-sm shadow">

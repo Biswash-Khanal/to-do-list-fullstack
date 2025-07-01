@@ -1,11 +1,22 @@
+import { Navigate } from "react-router-dom";
 import { useAppContext } from "../context/AppContext";
+import { useNavigate } from "react-router-dom";
+
+
 const Login = () => {
-	const { setShowLogin, loginRegisterSwitch } = useAppContext();
+	const { setShowLogin, loginRegisterSwitch, setLoginRegisterSwitch, setIsLoggedIn } = useAppContext();
+    const navigate = useNavigate();
+
+    const handleLogin = () => {
+        setIsLoggedIn(true);
+        setShowLogin(false);
+        navigate("/");  
+    };
 
 	if (loginRegisterSwitch === "register") {
 		return (
 			<div className="bg-primary/30 backdrop-blur-lg rounded-2xl shadow-lg p-8 w-full max-w-xl border border-font-primary/40">
-				<div className="flex h-[700px] w-full">
+				<div className="flex  w-full">
 					<button
 						onClick={() => setShowLogin(false)}
 						className="cursor-pointer absolute text-2xl text-font-primary"
@@ -125,6 +136,7 @@ const Login = () => {
 								<a
 									className="text-font-primary hover:underline"
 									href="#"
+                                    onClick={() => setLoginRegisterSwitch("login")}
 								>
 									Sign In
 								</a>
@@ -137,7 +149,7 @@ const Login = () => {
 	} else if (loginRegisterSwitch === "login") {
 		return (
 			<div className="bg-primary/30 backdrop-blur-lg rounded-2xl shadow-lg p-8 w-full max-w-xl border border-font-primary/40">
-				<div className="flex h-[700px] w-full">
+				<div className="flex  w-full">
 					<button
 						onClick={() => setShowLogin(false)}
 						className="cursor-pointer absolute text-2xl text-font-primary"
@@ -215,14 +227,14 @@ const Login = () => {
 							</div>
 
 							<div className="w-full flex items-center justify-between mt-8 text-font-primary/80">
-								<div className="flex items-center gap-2">
+								<div className="flex items-center gap-2 ">
 									<input
-										className="appearance-none w-5 h-5 border-2 border-[#7B3F00] rounded-md checked:bg-[#7B3F00] checked:border-[#7B3F00] focus:outline-none"
+										className="appearance-none w-5 h-5 border-2 border-[#7B3F00] rounded-md checked:bg-[#7B3F00] checked:border-[#7B3F00] focus:outline-none cursor-pointer"
 										type="checkbox"
 										id="checkbox"
 									/>
 									<label
-										className="text-sm "
+										className="text-sm cursor-pointer"
 										htmlFor="checkbox"
 									>
 										Remember me
@@ -239,14 +251,18 @@ const Login = () => {
 							<button
 								type="submit"
 								className="mt-8 w-full h-11 rounded-full text-font-primary bg-primary border-primary border-1 hover:opacity-90 transition-opacity cursor-pointer hover:bg-font-primary hover:text-primary"
+                                onClick={()=>{handleLogin();}}
+                                href="/home"
+                                
 							>
 								Login
 							</button>
 							<p className="text-font-secondary text-sm mt-4">
 								Don’t have an account?{" "}
 								<a
-									className="text-font-primary hover:underline"
-									href="#"
+									className="text-font-primary hover:underline cursor-pointer"
+									
+                                    onClick={()=>setLoginRegisterSwitch("register")}
 								>
 									Sign up
 								</a>

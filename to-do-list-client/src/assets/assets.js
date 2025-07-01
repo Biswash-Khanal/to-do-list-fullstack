@@ -3,6 +3,29 @@ import logo_caption_hor from "./logo_caption_hor.png";
 import logo_caption_ver from "./logo_caption_ver.png";
 import logo_full from "./logo_full.png";
 
+export const dummyTodos =  [
+        {
+            "_id": "6860724ed7ea2a330cb558cc",
+            "title": "test 1",
+            "description": "this is a test description",
+            "completed": false,
+            "user": "68603b8d4cfe204fd1814501",
+            "createdAt": "2025-06-28T22:53:02.057Z",
+            "updatedAt": "2025-06-28T22:53:02.057Z",
+            "__v": 0
+        },
+        {
+            "_id": "68607270d7ea2a330cb558d1",
+            "title": "test 3",
+            "description": "this is a test description",
+            "completed": false,
+            "user": "68603b8d4cfe204fd1814501",
+            "createdAt": "2025-06-28T22:53:36.003Z",
+            "updatedAt": "2025-06-28T22:53:36.003Z",
+            "__v": 0
+        }
+    ]
+
 
 export const assets = {
 	base_logo,

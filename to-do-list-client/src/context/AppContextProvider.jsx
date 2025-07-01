@@ -6,7 +6,7 @@ export const AppContextProvider = ({ children }) => {
 	const [isMenuOpen, setIsMenuOpen] = useState(false);
 	const [isLoggedIn, setIsLoggedIn] = useState(false);
 	const [showLogin, setShowLogin] = useState(false);
-	const[loginRegisterSwitch, setLoginRegisterSwitch] = useState("register");
+	const[loginRegisterSwitch, setLoginRegisterSwitch] = useState("login");
 
 	useEffect(() => {
 		const handleScroll = () => {
