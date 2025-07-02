@@ -12,10 +12,16 @@ const TodoCard = () => {
 				<h2 className="hidden sm:block text-font-primary">{dummyTodos[0].description}</h2>
 			</div>
 
-            <div className="hidden sm:block items-center bg-green-100 border-2 border-amber-300 rounded-lg ">
+            <div className={`hidden  ${dummyTodos[0].completed?"sm:block":"sm:hidden"} items-center bg-green-100 border-2 border-amber-300 rounded-lg `}>
                 Completed
             </div>
-            <div className="sm:hidden flex items-center bg-green-100 border-2 border-amber-300 rounded-lg w-5 h-5">
+			<div className={`hidden  ${!dummyTodos[0].completed?"sm:block":"sm:hidden"} items-center bg-red-300 border-2 border-black rounded-lg `}>
+                In-Progress
+            </div>
+            <div className={`sm:hidden ${dummyTodos[1].completed?"flex":"hidden"} items-center bg-green-100 border-2 border-amber-300 rounded-lg w-5 h-5`}>
+                
+            </div>
+			<div className={`sm:hidden ${!dummyTodos[1].completed?"flex":"hidden"} items-center  bg-red-300 border-2 border-black rounded-lg w-5 h-5`}>
                 
             </div>
 		</div>
