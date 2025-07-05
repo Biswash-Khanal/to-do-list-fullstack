@@ -1,10 +1,11 @@
 import express from 'express';
+import authMiddleware from '../middleware/auth.middleware.js';
+import { editUser, getUserDetails } from '../controller/user.controller.js';
+
 
 const userRoutes = express.Router();
 
-userRoutes.get('/', (req, res) => {
-    // Handle fetching user details
-    res.json({ message: "User details fetched successfully" });
-});
+userRoutes.get('/', authMiddleware, getUserDetails);
+userRoutes.post('/', authMiddleware, editUser);
 
 export default userRoutes;
