@@ -4,8 +4,10 @@ import Home from "./pages/Home";
 import { Toaster } from "react-hot-toast";
 import Landing from "./pages/Landing";
 import { useAppContext } from "./context/AppContext";
-import Login from "./components/Login";
+
 import { Routes, Route } from "react-router-dom";
+import Login from "./components/Login_Register/Login";
+import Account from "./pages/Account";
 
 const App = () => {
 	const { isLoggedIn, showLogin } = useAppContext();
@@ -14,7 +16,7 @@ const App = () => {
 		<div className="font-bitcount relative bg-secondary min-h-screen overflow-hidden">
 			{showLogin && (
 				<div className="fixed inset-0 z-50 flex items-center justify-center backdrop-blur-2xl bg-primary/520">
-					<Login />
+					<Login/>
 				</div>
 			)}
 			{!isLoggedIn ? (
@@ -26,6 +28,10 @@ const App = () => {
 						<Route
 							path="/"
 							element={<Home />}
+						/>
+						<Route
+							path="/account"
+							element={<Account />}
 						/>
 					</Routes>
 				</>

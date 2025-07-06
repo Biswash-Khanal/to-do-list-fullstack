@@ -225,7 +225,7 @@ export const navLinks = [
 	},
 	{
 		title: "Account",
-		link: "/users",
+		link: "/account",
 	},
 ];
 

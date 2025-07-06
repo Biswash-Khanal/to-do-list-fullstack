@@ -1,4 +1,5 @@
 
+import { Link } from 'react-router-dom';
 import { navLinks, assets } from '../assets/assets.js';
 import { useAppContext } from '../context/AppContext.jsx';
 
@@ -13,23 +14,23 @@ const {isScrolled, isMenuOpen, setIsMenuOpen, setIsLoggedIn, IsLoggedIn} = useAp
             <nav className={`fixed top-0 left-0 bg-primary w-full flex items-center justify-between px-4 md:px-16 lg:px-24 xl:px-32 transition-all duration-500 z-50 ${isScrolled ? "bg-secondary shadow-md text-font-primary backdrop-blur-lg py-3 md:py-4" : "py-4 md:py-6"}`}>
 
                 {/* Logo */}
-                <a href="/" className="flex items-center gap-2">
+                <Link to="/" className="flex items-center gap-2">
                     <img src={assets.logo_caption_hor} alt="logo" className={`h-9`} />
-                </a>
+                </Link>
 
                 {/* Desktop Nav */}
-                <div className="hidden md:flex items-center gap-20 lg:gap-8">
+                <div className="hidden sm:flex items-center gap-20 lg:gap-8">
                     {navLinks.map((link, i) => (
-                        <a key={i} href={link.link} className={`group flex flex-col gap-0.5 ${isScrolled ? "text-font-secondary" : "text-font-primary"}`}>
+                        <Link key={i} to={link.link} className={`group flex flex-col gap-0.5 ${isScrolled ? "text-font-secondary" : "text-font-primary"}`}>
                             {link.title}
                             <div className={`${isScrolled ? "bg-font-primary" : "bg-font-secondary"} h-0.5 w-0 group-hover:w-full transition-all duration-300`} />
-                        </a>
+                        </Link>
                     ))}
 
                 </div>
 
                 {/* Desktop Right */}
-                <div className="hidden md:flex items-center gap-4">
+                <div className="hidden sm:flex items-center gap-4">
                     
                     <button onClick={()=>setIsLoggedIn(false)} className={`${isScrolled?"bg-primary text-font-secondary":"bg-secondary text-font-primary"}  px-8 py-2.5 rounded-full ml-4 transition-all duration-500 hover:scale-110 cursor-pointer`}>
                         Log-Out
@@ -37,7 +38,7 @@ const {isScrolled, isMenuOpen, setIsMenuOpen, setIsLoggedIn, IsLoggedIn} = useAp
                 </div>
 
                 {/* Mobile Menu Button */}
-                <div className="flex items-center gap-3 md:hidden">
+                <div className="flex items-center gap-3 sm:hidden">
                     <svg onClick={() => setIsMenuOpen(!isMenuOpen)} className={`h-6 w-6 cursor-pointer ${isScrolled ? "text-font-primary" : ""}`} fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
                         <line x1="4" y1="6" x2="20" y2="6" />
                         <line x1="4" y1="12" x2="20" y2="12" />
@@ -55,9 +56,9 @@ const {isScrolled, isMenuOpen, setIsMenuOpen, setIsLoggedIn, IsLoggedIn} = useAp
                     </button>
 
                     {navLinks.map((link, i) => (
-                        <a key={i} href={link.link} onClick={() => setIsMenuOpen(false)}>
+                        <Link key={i} to={link.link} onClick={() => setIsMenuOpen(false)}>
                             {link.title}
-                        </a>
+                        </Link>
                     ))}
 
 

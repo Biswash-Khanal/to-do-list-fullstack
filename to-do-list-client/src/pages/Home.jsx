@@ -8,7 +8,7 @@ const Home = () => {
 	
 	return (
 		<div className={`flex flex-col items-center bg-gradient-to-b from-secondary to-primary py-32 gap-10`}>
-			{console.log("dummyTodos:", dummyTodos)}
+			
 
 
 			{dummyTodos.map((todo) => (
