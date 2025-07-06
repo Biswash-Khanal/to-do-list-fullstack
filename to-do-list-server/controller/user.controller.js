@@ -24,6 +24,8 @@ export const getUserDetails = async (req, res, next) => {
 };
 
 export const editUser = async (req, res, next) => {
+	const editUserSession = await mongoose.startSession();
+	editUserSession.startTransaction();
 	try {
 		const user = req.authorizedId;
 		if (!user) {
@@ -67,6 +69,8 @@ export const editUser = async (req, res, next) => {
 		fetchedUser.password = hashedPassword;
 
 		await fetchedUser.save();
+		await editUserSession.commitTransaction();
+		editUserSession.endSession();
 
 		// Logout the user (by clearing token cookie)
 		res.clearCookie("token");
@@ -76,6 +80,40 @@ export const editUser = async (req, res, next) => {
 			message: "User updated successfully. Please log in again.",
 		});
 	} catch (error) {
+		await editUserSession.abortTransaction();
+		editUserSession.endSession();
+		next(error);
+	}
+};
+
+export const deleteUser = async (req, res, next) => {
+	const deleteUserSession = await mongoose.startSession();
+	deleteUserSession.startTransaction();
+	try {
+		const user = req.authorizedId;
+		if (!user) {
+			throw new AppError("Unauthorized to access", 401);
+		}
+
+		const fetchedUser = await User.findById(user);
+		if (!fetchedUser) {
+			throw new AppError("No current user exists in database", 404);
+		}
+
+		await User.findByIdAndDelete(user);
+		await deleteUserSession.commitTransaction();
+		deleteUserSession.endSession();
+
+		// Logout the user (by clearing token cookie)
+		res.clearCookie("token");
+
+		// Respond with success and logout notice
+		res.status(200).json({
+			message: "User deleted successfully.",
+		});
+	} catch (error) {
+		await deleteUserSession.abortTransaction();
+		deleteUserSession.endSession();
 		next(error);
 	}
 };
