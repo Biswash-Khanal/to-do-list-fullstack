@@ -5,6 +5,7 @@ const AuthForm = ({
   onClose,
   switchText,
   onSwitch,
+  
 }) => (
   <div className="bg-primary/30 backdrop-blur-lg rounded-2xl shadow-lg p-8 w-full max-w-xl border border-font-primary/40">
     <div className="flex w-full">
