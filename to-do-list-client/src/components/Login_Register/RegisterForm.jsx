@@ -60,7 +60,7 @@ const RegisterForm = ({ onClose, onSwitch, onSubmit }) => {
 			<button
 				type="submit"
 				className=" mt-8 w-full h-11 rounded-full text-font-primary bg-primary border-font-primary border-1 hover:opacity-90 transition-opacity cursor-pointer hover:bg-font-primary hover:text-primary"
-				onClick={onSubmit}
+				
 			>
 				Register
 			</button>

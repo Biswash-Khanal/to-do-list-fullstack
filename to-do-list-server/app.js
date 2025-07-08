@@ -9,7 +9,7 @@ import dotenv from "dotenv";
 import authRoutes from "./routes/auth.route.js";
 import userRoutes from "./routes/user.route.js";
 import todoRoutes from "./routes/todo.route.js";
-import { PORT } from "./config/env.js";
+import { CLIENT_URL, PORT } from "./config/env.js";
 import connectToDatabase from "./database/mongodb.js";
 import errorMiddleware from "./middleware/error.middleware.js";
 
@@ -17,6 +17,13 @@ import errorMiddleware from "./middleware/error.middleware.js";
 
 
 const app = express();
+
+app.use(
+	cors({
+		origin: CLIENT_URL,
+		credentials: true,
+	})
+)
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));

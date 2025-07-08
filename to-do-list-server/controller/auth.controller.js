@@ -15,7 +15,7 @@ export const registerUser = async (req, res, next) => {
 		}
 
 		if (await User.findOne({ email })) {
-			throw new AppError("Account with this Email already exists", 400);
+			throw new AppError("Account with this Email already exists", 405);
 		}
 
 		if (await User.findOne({ username })) {

@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import LoginForm from "./LoginForm";
 import RegisterForm from "./RegisterForm";
 import axios from "../../api/axios";
+import toast from "react-hot-toast";
 
 const Login = () => {
 	const {
@@ -18,22 +19,22 @@ const Login = () => {
 		setShowLogin(false);
 		navigate("/");
 	};
-	const handleRegister = async ({data}) => {
+	const handleRegister = async (data) => {
 		
     try {
-      const res = await axios.post("/users/register", {
+      const res = await axios.post("/auth/register", {
         email: data.email,
         username: data.username,
         password: data.password,
       });
-      if(res.success === true){
+      if(res.data.success === true){
         console.log("Registration successful:", res.data);
+		toast.success(res.data.message);
       }
-      else{
-        throw new Error("Registration failed");
-      }
+
     } catch (error) {
-      console.error("Registration failed:", error);
+		toast.error(error.response.data.error);
+      
     }
 		
 	};

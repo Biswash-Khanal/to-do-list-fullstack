@@ -36,7 +36,40 @@ const App = () => {
 					</Routes>
 				</>
 			)}
-			<Toaster />
+<Toaster
+  position="top-center"
+  toastOptions={{
+    duration: 5000,
+    style: {
+      background: "#F2BFA4",
+      color: "#7B3F00",
+      fontSize: "16px",
+    },
+    success: {
+      iconTheme: {
+        primary: "green",
+        secondary: "#F2BFA4",
+      },
+      style: {
+        background: "#F2BFA4",
+        color: "#7B3F00",
+      },
+      duration: 5000,
+    },
+    error: {
+      iconTheme: {
+        primary: "red",
+        secondary: "#F2BFA4",
+      },
+      style: {
+        background: "#F2BFA4",
+        color: "red",
+      },
+      duration: 5000,
+    },
+  }}
+/>
+
 		</div>
 	);
 };
