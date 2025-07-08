@@ -29,7 +29,7 @@ const AuthForm = ({
 </button>
 
       <div className="w-full flex flex-col items-center justify-center">
-        <form className="md:w-96 w-80 flex flex-col items-center justify-center">
+        
           <h2 className="text-4xl text-gray-900 font-medium">{title}</h2>
           <p className="text-sm text-font-primary mt-3">{subtitle}</p>
           {children}
@@ -42,7 +42,7 @@ const AuthForm = ({
               {title === "Sign in" ? "Sign up" : "Sign in"}
             </span>
           </p>
-        </form>
+        
       </div>
     </div>
   </div>

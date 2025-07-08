@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { assets } from "../assets/assets";
+import { assets } from "../assets/assets.jsx";
 import { useAppContext } from "../context/AppContext";
 
 const Landing = () => {

@@ -1,6 +1,8 @@
 import { useState } from "react";
 import AuthForm from "./AuthForm";
 import InputField from "./InputField";
+import { icons } from "../../assets/assets.jsx";
+
 
 const RegisterForm = ({ onClose, onSwitch, onSubmit }) => {
 	const [formData, setFormData] = useState({
@@ -36,6 +38,7 @@ const RegisterForm = ({ onClose, onSwitch, onSubmit }) => {
         name="username"
         value={formData.username}
         onChange={handleInputChange}
+		icon={icons.user}
 			/>
 			<InputField
 				type="email"
@@ -43,6 +46,7 @@ const RegisterForm = ({ onClose, onSwitch, onSubmit }) => {
         name="email"
         value={formData.email}
         onChange={handleInputChange}
+		icon={icons.email}
 			/>
 			<InputField
 				type="password"
@@ -50,6 +54,7 @@ const RegisterForm = ({ onClose, onSwitch, onSubmit }) => {
         name="password"
         value={formData.password}
         onChange={handleInputChange}
+		icon={icons.password}
 			/>
 
 			<button
@@ -61,7 +66,7 @@ const RegisterForm = ({ onClose, onSwitch, onSubmit }) => {
 			</button>
       </form>
 
-			<div className="flex items-center gap-4 w-full my-5">
+			<div className=" flex items-center gap-4 w-full my-5">
 				<div className="w-full h-px bg-black"></div>
 				<p className="w-full text-nowrap text-sm text-font-primary/90">
 					or Sign Up with Google Account
@@ -70,7 +75,7 @@ const RegisterForm = ({ onClose, onSwitch, onSubmit }) => {
 			</div>
 			<button
 				type="button"
-				className="border border-font-primary w-full mt-2 bg-primary flex items-center justify-center h-12 rounded-full cursor-pointer hover:bg-font-primary hover:text-primary transition-all"
+				className="md:w-96 w-80 border border-font-primary mt-2 bg-primary flex items-center justify-center h-12 rounded-full cursor-pointer hover:bg-font-primary hover:text-primary transition-all"
 			>
 				<img
 					src="https://raw.githubusercontent.com/prebuiltui/prebuiltui/main/assets/login/googleLogo.svg"

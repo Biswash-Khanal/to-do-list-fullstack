@@ -1,5 +1,6 @@
-const InputField = ({ type, placeholder, name, value, onChange }) => (
+const InputField = ({ type, placeholder, name, value, onChange, icon }) => (
   <div className="border border-font-primary flex items-center mt-6 w-full bg-transparent  h-12 rounded-full overflow-hidden pl-6 gap-2">
+  {icon && <div className=" text-font-primary">{icon}</div>}
     <input
       type={type}
       placeholder={placeholder}

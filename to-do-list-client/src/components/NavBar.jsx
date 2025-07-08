@@ -1,6 +1,6 @@
 
 import { Link } from 'react-router-dom';
-import { navLinks, assets } from '../assets/assets.js';
+import { navLinks, assets } from '../assets/assets.jsx';
 import { useAppContext } from '../context/AppContext.jsx';
 
 const NavBar = () => {

@@ -1,7 +1,7 @@
 
 import TodoCard from "../components/TodoCard";
 
-import { dummyTodos } from "../assets/assets.js";
+
 
 
 const Home = () => {
@@ -11,9 +11,8 @@ const Home = () => {
 			
 
 
-			{dummyTodos.map((todo) => (
-				<TodoCard key={todo._id} todo={todo} />
-			))}
+			test
+			
 		</div>
 	);
 };
