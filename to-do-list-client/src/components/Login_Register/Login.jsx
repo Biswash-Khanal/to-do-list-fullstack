@@ -14,29 +14,35 @@ const Login = () => {
 	} = useAppContext();
 	const navigate = useNavigate();
 
-	const handleLogin = () => {
-		setIsLoggedIn(true);
-		setShowLogin(false);
-		navigate("/");
-	};
-	const handleRegister = async (data) => {
-		
-    try {
-      const res = await axios.post("/auth/register", {
-        email: data.email,
-        username: data.username,
-        password: data.password,
-      });
-      if(res.data.success === true){
-        console.log("Registration successful:", res.data);
-		toast.success(res.data.message);
-      }
+	const handleLogin = async (loginData) => {
+		try {
+			const res = await axios.post("/auth/login", loginData);
 
-    } catch (error) {
-		toast.error(error.response.data.error);
-      
-    }
-		
+			if (res.data.success === true) {
+				console.log("Logged in Successfully");
+				toast.success(res.data.message);
+				setIsLoggedIn(true);
+				navigate("/");
+				setShowLogin(false);
+			}
+		} catch (error) {
+			toast.error(error.response.data.error);
+		}
+	};
+	const handleRegister = async (registerData) => {
+		try {
+			const res = await axios.post("/auth/register", registerData);
+
+			if (res.data.success === true) {
+				console.log("Registration successful:", res.data);
+				toast.success(res.data.message);
+				navigate("/");
+				setShowLogin(false);
+			}
+			console.log(registerData);
+		} catch (error) {
+			toast.error(error.response.data.error);
+		}
 	};
 
 	return loginRegisterSwitch === "register" ? (

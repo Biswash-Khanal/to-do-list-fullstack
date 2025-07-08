@@ -52,6 +52,7 @@ const RegisterForm = ({ onClose, onSwitch, onSubmit }) => {
 				type="password"
 				placeholder="Password"
         name="password"
+		
         value={formData.password}
         onChange={handleInputChange}
 		icon={icons.password}
