@@ -1,9 +1,27 @@
 
-import { Link } from 'react-router-dom';
+import { Link, Navigate, useNavigate } from 'react-router-dom';
 import { navLinks, assets } from '../assets/assets.jsx';
 import { useAppContext } from '../context/AppContext.jsx';
-
+import axios from '../api/axios.js';
+import toast from 'react-hot-toast';
 const NavBar = () => {
+const navigate = useNavigate();
+
+
+    const handleLogout = async()=>{
+        try {
+            const response = await axios.post("/auth/logout" );
+            if(response.data.success === true){
+                setIsLoggedIn(false);
+                navigate("/");
+                toast.success(response.data.message)
+            }
+        } catch (error) {
+
+            toast.error(error.response.data.error);
+        }
+        
+    }
 
 const {isScrolled, isMenuOpen, setIsMenuOpen, setIsLoggedIn, IsLoggedIn} = useAppContext();
 
@@ -32,7 +50,7 @@ const {isScrolled, isMenuOpen, setIsMenuOpen, setIsLoggedIn, IsLoggedIn} = useAp
                 {/* Desktop Right */}
                 <div className="hidden sm:flex items-center gap-4">
                     
-                    <button onClick={()=>setIsLoggedIn(false)} className={`${isScrolled?"bg-primary text-font-secondary":"bg-secondary text-font-primary"}  px-8 py-2.5 rounded-full ml-4 transition-all duration-500 hover:scale-110 cursor-pointer`}>
+                    <button onClick={handleLogout} className={`${isScrolled?"bg-primary text-font-secondary":"bg-secondary text-font-primary"}  px-8 py-2.5 rounded-full ml-4 transition-all duration-500 hover:scale-110 cursor-pointer`}>
                         Log-Out
                     </button>
                 </div>
@@ -62,7 +80,7 @@ const {isScrolled, isMenuOpen, setIsMenuOpen, setIsLoggedIn, IsLoggedIn} = useAp
                     ))}
 
 
-                    <button onClick={()=>setIsLoggedIn(false)} className="bg-secondary text-font-secondary px-8 py-2.5 rounded-full transition-all duration-500 cursor-pointer hover:scale-110">
+                    <button onClick={handleLogout} className="bg-secondary text-font-secondary px-8 py-2.5 rounded-full transition-all duration-500 cursor-pointer hover:scale-110">
                         Logout
                     </button>
                 </div>
