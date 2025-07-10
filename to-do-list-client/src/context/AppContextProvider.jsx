@@ -16,6 +16,10 @@ export const AppContextProvider = ({ children }) => {
 		return () => window.removeEventListener("scroll", handleScroll);
 	}, []);
 
+	useEffect(() => {
+		
+	}, []);
+
 	const value = {
 		scrollY,
         setScrollY,
