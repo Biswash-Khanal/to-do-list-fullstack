@@ -22,7 +22,7 @@ const Login = () => {
 				console.log("Logged in Successfully");
 				toast.success(res.data.message);
 				setIsLoggedIn(true);
-				navigate("/");
+				navigate("/todos");
 				setShowLogin(false);
 			}
 		} catch (error) {

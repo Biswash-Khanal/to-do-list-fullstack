@@ -8,14 +8,16 @@ const authMiddleware = (req, res, next) => {
 		if (!token) {
 			throw new AppError("Authentication token is missing", 401);
 		}
-        // Verify the token using the secret key
+		// Verify the token using the secret key
 		const decoded = jwt.verify(token, JWT_SECRET);
-        req.authorizedId = decoded.tokenId;
-        next();
-
+		if (!decoded?.tokenId) {
+			throw new AppError("Invalid token payload", 401);
+		}
+		req.authorizedId = decoded.tokenId;
+		next();
 	} catch (error) {
-        next(error);
-    }
+		next(error);
+	}
 };
 
 export default authMiddleware;

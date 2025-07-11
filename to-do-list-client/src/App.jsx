@@ -8,6 +8,7 @@ import { useAppContext } from "./context/AppContext";
 import { Routes, Route } from "react-router-dom";
 import Login from "./components/Login_Register/Login";
 import Account from "./pages/Account";
+import Todos from "./pages/Todos";
 
 const App = () => {
 	const { isLoggedIn, showLogin } = useAppContext();
@@ -32,6 +33,10 @@ const App = () => {
 						<Route
 							path="/account"
 							element={<Account />}
+						/>
+						<Route
+							path="/todos"
+							element={<Todos />}
 						/>
 					</Routes>
 				</>

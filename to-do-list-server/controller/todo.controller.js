@@ -62,43 +62,56 @@ export const updateTodo = async (req, res, next) => {
 	const updateTodoSession = await mongoose.startSession();
 	updateTodoSession.startTransaction();
 
-	try {
-		const _id = req.params.id;
-		const user = req.authorizedId;
-		const { title, description } = req.body;
+try {
+	const _id = req.params.id;
+	const user = req.authorizedId;
+	const { title, description, completed } = req.body;
 
-		if (!title && !description) {
-			throw new AppError("No fields to update", 200);
-		}
-
-		const updateFields = {};
-		if (title) updateFields.title = title;
-		if (description) updateFields.description = description;
-
-		const updatedTodo = await Todo.findOne({ _id, user });
-
-		if (!updatedTodo) {
-			throw new AppError("couldnt find the todo", 400);
-		}
-
-		if (updateFields.title) updatedTodo.title = updateFields.title;
-		if (updateFields.description)
-			updatedTodo.description = updateFields.description;
-
-		await updatedTodo.save({ session: updateTodoSession });
-		await updateTodoSession.commitTransaction();
-		updateTodoSession.endSession();
-
-		return res.status(200).json({
-			success: true,
-			message: "Todo updated successfully",
-			todo: updatedTodo,
-		});
-	} catch (error) {
-		await updateTodoSession.abortTransaction();
-		updateTodoSession.endSession();
-		next(error);
+	if (
+		typeof title === "undefined" &&
+		typeof description === "undefined" &&
+		typeof completed === "undefined"
+	) {
+		throw new AppError("No fields to update", 400);
 	}
+
+	const updateFields = {};
+
+
+	if (typeof title !== "undefined") updateFields.title = title;
+
+
+	if (typeof description !== "undefined") updateFields.description = description;
+
+
+	if (typeof completed !== "undefined") updateFields.completed = completed;
+
+	const updatedTodo = await Todo.findOne({ _id, user });
+
+	if (!updatedTodo) {
+		throw new AppError("Could not find the todo", 404);
+	}
+
+	
+	for (const key in updateFields) {
+		updatedTodo[key] = updateFields[key];
+	}
+
+	await updatedTodo.save({ session: updateTodoSession });
+	await updateTodoSession.commitTransaction();
+	updateTodoSession.endSession();
+
+	return res.status(200).json({
+		success: true,
+		message: "Todo updated successfully",
+		todo: updatedTodo,
+	});
+} catch (error) {
+	await updateTodoSession.abortTransaction();
+	updateTodoSession.endSession();
+	next(error);
+}
+
 };
 export const deleteTodo = async (req, res, next) => {
 	const deleteTodoSession = await mongoose.startSession();
