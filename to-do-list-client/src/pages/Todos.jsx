@@ -34,6 +34,7 @@ const Todos = () => {
           </div>
         ))
       )}
+      <TodoCard isActualCard={false}/>
     </div>
   );
 };
