@@ -23,14 +23,15 @@ export const AppContextProvider = ({ children }) => {
 			try {
 				const response = await axios.get("/auth/verify");
 
-				if (response.data.success === true) {
+				if (response.data?.success === true) {
 					setIsLoggedIn(true);
-					setLoggedUser(response.data.user);
+					setLoggedUser(response.data?.user);
 				}
 			} catch (error) {
 				setIsLoggedIn(false);
 				setLoggedUser({});
-				console.log(error.response.data.error);
+				console.log(error.response?.data?.error);
+				console.log("test")
 			}
 		}
 

@@ -86,7 +86,7 @@ export const loginUser = async (req, res, next) => {
 			httpOnly: true,
 			secure: NODE_ENV === "production",
 			sameSite: "strict",
-			maxAge: 3600000, // 1 hour
+			maxAge: 1*60*60*1000, // 1 hour
 		});
 
 		return res.status(200).json({
