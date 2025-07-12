@@ -3,7 +3,16 @@ import axios from "../api/axios";
 import { icons } from "../assets/assets";
 import Button from "./Button";
 
-const TodoCard = ({ todo={}, isActualCard=true }) => {
+const TodoCard = ({
+	todo = {},
+	isActualCard = true,
+	toBeCreated,
+	toBeDeleted,
+	toBeUpdated,
+	setToBeCreated,
+	setToBeDeleted,
+	setToBeUpdated,
+}) => {
 	const [isCompleted, setIsCompleted] = useState(todo.completed);
 	const [isLoading, setIsLoading] = useState(false);
 
@@ -28,10 +37,15 @@ const TodoCard = ({ todo={}, isActualCard=true }) => {
 		}
 	};
 
+	const handleEdit =()=>{
+		setToBeUpdated({open:true, todo:todo})
+		console.log("test")
+	}
+
 	return isActualCard ? (
-		<div className="bg-primary/30 backdrop-blur-2xl border-2 border-font-secondary shadow-md rounded-lg p-6 mx-5 flex items-center justify-between w-sm sm:w-2xl md:w-3xl lg:w-4xl transition-all duration-300">
+		<div className="bg-primary/30 backdrop-blur-2xl border-2 border-font-secondary shadow-xl shadow-b rounded-lg p-6 mx-5 flex items-center justify-between w-sm sm:w-2xl md:w-3xl lg:w-4xl transition-all duration-300 ">
 			{/*Edit Button */}
-			<Button icon={icons.editIcon} />
+			<Button icon={icons.editIcon} onClick={handleEdit}/>
 
 			<div className="flex flex-col gap-2">
 				<h1 className="text-2xl font-semibold text-font-primary">
@@ -80,10 +94,10 @@ const TodoCard = ({ todo={}, isActualCard=true }) => {
 			<Button icon={icons.deleteIcon} />
 		</div>
 	) : (
-		<div className="bg-primary/30 backdrop-blur-2xl border-2 border-font-secondary shadow-md rounded-lg p-6 mx-5 flex items-center justify-between w-sm sm:w-2xl md:w-3xl lg:w-4xl transition-all duration-300">
-			<div className="flex flex-col gap-2">
-				<h1 className="text-2xl font-semibold text-font-primary">
-					Click here to add a new Todo
+		<div className=" bg-primary/30 backdrop-blur-2xl border-2 border-green-500 shadow-md rounded-lg p-6 mx-5 flex items-center justify-center w-sm sm:w-2xl md:w-3xl lg:w-4xl transition-all duration-300 cursor-pointer hover:scale-95 text-green-400 ">
+			<div className="flex flex-col gap-2 text-green-400 ">
+				<h1 className="text-2xl font-semibold text-green-400  text-shadow-2xs">
+					Click here to add a new Todo.......
 				</h1>
 				<p className="hidden sm:block text-font-primary text-sm">
 					You will be able to set your title and description
