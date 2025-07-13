@@ -10,6 +10,18 @@ export const assets = {
 	logo_full,
 };
 
+export const modalText = {
+	add: {
+		title: "Please Enter Details!",
+	},
+	edit: {
+		title: "Please Edit Details!",
+	},
+	delete: {
+		title: "Are You Sure?",
+	},
+};
+
 export const icons = {
 	user: (
 		<svg

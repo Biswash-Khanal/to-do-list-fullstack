@@ -38,9 +38,9 @@ const Todos = () => {
 
 	return (
 		<>
-			{toBeDeleted.open && <DeleteConfirm />}
-			{toBeCreated.open && <TodoAdd />}
-			{toBeUpdated.open && <TodoEdit />}
+			{toBeDeleted.open && <DeleteConfirm setUserTodos={setUserTodos} toBeDeleted={toBeDeleted}  setToBeDeleted={setToBeDeleted} />}
+			{toBeCreated.open && <TodoAdd setUserTodos={setUserTodos} toBeCreated={toBeCreated} setToBeCreated={setToBeCreated} />}
+			{toBeUpdated.open && <TodoEdit setUserTodos={setUserTodos} toBeUpdated={toBeUpdated} setToBeUpdated={setToBeUpdated} />}
 			<div className="mt-30 flex flex-col gap-10 items-center">
 				{userTodos.length === 0 ? (
 					<p>No todos yet.</p>
@@ -48,12 +48,12 @@ const Todos = () => {
 					userTodos.map((todo) => (
 						<div key={todo._id}>
 							<TodoCard
-          toBeCreated={toBeCreated}
-					toBeDeleted={toBeDeleted}
-					toBeUpdated={toBeUpdated}
-					setToBeCreated={setToBeCreated}
-					setToBeDeleted={setToBeDeleted}
-					setToBeUpdated={setToBeUpdated}
+								toBeCreated={toBeCreated}
+								toBeDeleted={toBeDeleted}
+								toBeUpdated={toBeUpdated}
+								setToBeCreated={setToBeCreated}
+								setToBeDeleted={setToBeDeleted}
+								setToBeUpdated={setToBeUpdated}
 								key={todo._id}
 								todo={todo}
 							/>
@@ -61,8 +61,9 @@ const Todos = () => {
 					))
 				)}
 				<TodoCard
-
 					isActualCard={false}
+					toBeCreated={toBeCreated}
+					setToBeCreated={setToBeCreated}
 				/>
 			</div>
 		</>

@@ -39,7 +39,15 @@ const TodoCard = ({
 
 	const handleEdit =()=>{
 		setToBeUpdated({open:true, todo:todo})
-		console.log("test")
+		console.log("test edit")
+	}
+	const handleCreate =()=>{
+		setToBeCreated({open:true, todo:todo})
+		console.log("test update")
+	}
+	const handleDelete =()=>{
+		setToBeDeleted({open:true, todo:todo})
+		console.log("test delete")
 	}
 
 	return isActualCard ? (
@@ -91,10 +99,10 @@ const TodoCard = ({
 			></div>
 
 			{/*Delete Button */}
-			<Button icon={icons.deleteIcon} />
+			<Button icon={icons.deleteIcon} onClick={handleDelete} />
 		</div>
 	) : (
-		<div className=" bg-primary/30 backdrop-blur-2xl border-2 border-green-500 shadow-md rounded-lg p-6 mx-5 flex items-center justify-center w-sm sm:w-2xl md:w-3xl lg:w-4xl transition-all duration-300 cursor-pointer hover:scale-95 text-green-400 ">
+		<div onClick={handleCreate} className=" bg-primary/30 backdrop-blur-2xl border-2 border-green-500 shadow-md rounded-lg p-6 mx-5 flex items-center justify-center w-sm sm:w-2xl md:w-3xl lg:w-4xl transition-all duration-300 cursor-pointer hover:scale-95 text-green-400 ">
 			<div className="flex flex-col gap-2 text-green-400 ">
 				<h1 className="text-2xl font-semibold text-green-400  text-shadow-2xs">
 					Click here to add a new Todo.......
