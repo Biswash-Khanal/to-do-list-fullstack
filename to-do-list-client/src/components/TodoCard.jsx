@@ -6,9 +6,6 @@ import Button from "./Button";
 const TodoCard = ({
 	todo = {},
 	isActualCard = true,
-	toBeCreated,
-	toBeDeleted,
-	toBeUpdated,
 	setToBeCreated,
 	setToBeDeleted,
 	setToBeUpdated,

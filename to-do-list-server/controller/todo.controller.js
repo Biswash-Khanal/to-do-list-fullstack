@@ -23,6 +23,8 @@ export const createTodo = async (req, res, next) => {
 			user,
 		});
 
+		
+
 		await newTodo.save({ session: createTodoSession });
 
 		await createTodoSession.commitTransaction();
@@ -31,6 +33,8 @@ export const createTodo = async (req, res, next) => {
 		res.status(201).json({
 			success: true,
 			message: "Todo created successfully",
+			todo:newTodo
+			
 		});
 	} catch (error) {
 		await createTodoSession.abortTransaction();
@@ -121,15 +125,16 @@ export const deleteTodo = async (req, res, next) => {
 		const _id = req.params.id;
 		const user = req.authorizedId;
 
-		const deletedResult = await Todo.deleteOne(
-			{ _id, user },
+const deletedTodo = await Todo.findOneAndDelete(
+  { _id, user },
+  { session: deleteTodoSession }
+);
 
-			{ session: deleteTodoSession }
-		);
 
-		if (deletedResult.acknowledged === false) {
-			throw new AppError("Could'nt delete the record", 400);
-		}
+if (!deletedTodo) {
+  throw new AppError("Could not find or delete the todo", 404);
+}
+
 
 		await deleteTodoSession.commitTransaction();
 		deleteTodoSession.endSession();
@@ -137,6 +142,7 @@ export const deleteTodo = async (req, res, next) => {
 		return res.status(200).json({
 			success: true,
 			message: "Todo deleted successfully",
+			todo:deletedTodo
 		});
 	} catch (error) {
 		await deleteTodoSession.abortTransaction();
@@ -144,3 +150,5 @@ export const deleteTodo = async (req, res, next) => {
 		next(error);
 	}
 };
+
+

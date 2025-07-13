@@ -2,7 +2,7 @@ import React from 'react'
 import ConfirmModal from './ConfirmModal'
 
 
-const TodoAdd = ({setToBeCreated}) => {
+const TodoAdd = ({setToBeCreated, toBeCreated, setUserTodos}) => {
   const handleClose = ()=>{
 
         setToBeCreated({open:false, todo:null})
@@ -10,7 +10,7 @@ const TodoAdd = ({setToBeCreated}) => {
 
 	return (
         <div className="fixed inset-0 z-50 flex items-center justify-center backdrop-blur-2xl bg-primary/520">
-            <ConfirmModal type="add" onClose={handleClose} title="Hello" subtitle="Hello" switchText="Don’t have an account?">
+            <ConfirmModal setUserTodos={setUserTodos} toBeOption={toBeCreated} setToBeOption={setToBeCreated} type="add" onClose={handleClose} >
 
             </ConfirmModal>
         </div>

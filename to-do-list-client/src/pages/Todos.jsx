@@ -24,9 +24,10 @@ const Todos = () => {
 	useEffect(() => {
 		const fetchTodos = async () => {
 			try {
-				const response = await axios.get("/todos/");
+				const response = await axios.get("/todos");
 				if (response.data.success === true) {
 					setUserTodos(response.data.todos);
+					
 				}
 			} catch (error) {
 				console.log(error.response?.data?.error || "Fetch failed");
@@ -54,7 +55,7 @@ const Todos = () => {
 								setToBeCreated={setToBeCreated}
 								setToBeDeleted={setToBeDeleted}
 								setToBeUpdated={setToBeUpdated}
-								key={todo._id}
+								
 								todo={todo}
 							/>
 						</div>
