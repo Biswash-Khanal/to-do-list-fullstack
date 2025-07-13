@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import InputField from "../Login_Register/InputField";
 import { modalText } from "../../assets/assets";
 import axios from "../../api/axios";
+import toast from "react-hot-toast";
+
 
 const ConfirmModal = ({ onClose, setToBeOption, toBeOption, type, setUserTodos }) => {
   const title = modalText[type]?.title || "Confirm Action";
@@ -24,10 +26,12 @@ const ConfirmModal = ({ onClose, setToBeOption, toBeOption, type, setUserTodos }
         setUserTodos((prev) => prev.filter((todo) => todo._id !== toBeOption.todo._id));
         setToBeOption({ open: false, todo: null });
         console.log(response.data.todo);
+        toast.success(response.data.message)
       }
       console.log(response.data.message);
     } catch (error) {
       console.log(error);
+      toast.error(error.response.data.error)
     }
   };
 
@@ -45,10 +49,12 @@ const ConfirmModal = ({ onClose, setToBeOption, toBeOption, type, setUserTodos }
         setUserTodos((prev) => [...prev, response.data.todo]);
         setToBeOption({ open: false, todo: null });
         console.log(response.data.todo);
+        toast.success(response.data.message)
       }
       console.log(response.data.message);
     } catch (error) {
       console.log(error);
+      toast.error(error.response.data.error)
     }
   };
 
@@ -67,10 +73,12 @@ const ConfirmModal = ({ onClose, setToBeOption, toBeOption, type, setUserTodos }
         );
         setToBeOption({ open: false, todo: null });
         console.log(response.data.todo);
+        toast.success(response.data.message)
       }
       console.log(response.data.message);
     } catch (error) {
       console.log(error);
+      toast.error(error.response.data.error)
     }
   };
 
