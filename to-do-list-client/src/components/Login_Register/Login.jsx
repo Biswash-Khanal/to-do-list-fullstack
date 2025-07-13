@@ -26,7 +26,8 @@ const Login = () => {
 				setShowLogin(false);
 			}
 		} catch (error) {
-			toast.error(error.response.data.error);
+			console.log(error)
+			toast.error(error);
 		}
 	};
 	const handleRegister = async (registerData) => {

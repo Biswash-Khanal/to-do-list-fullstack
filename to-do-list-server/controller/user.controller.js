@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import User from "../model/user.model.js";
+import Todo from "../model/todo.model.js";
 import AppError from "../utils/AppError.js";
 import jwt from "jsonwebtoken";
 import bcrypt, { hash } from "bcryptjs";
@@ -101,6 +102,7 @@ export const deleteUser = async (req, res, next) => {
 		}
 
 		await User.findByIdAndDelete(user);
+		await Todo.deleteMany({user})
 		await deleteUserSession.commitTransaction();
 		deleteUserSession.endSession();
 
