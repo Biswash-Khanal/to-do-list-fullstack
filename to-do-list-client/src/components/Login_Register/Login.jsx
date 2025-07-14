@@ -27,7 +27,7 @@ const Login = () => {
 			}
 		} catch (error) {
 			console.log(error)
-			toast.error(error);
+			toast.error(error.response?.data?.error);
 		}
 	};
 	const handleRegister = async (registerData) => {
@@ -39,6 +39,7 @@ const Login = () => {
 				toast.success(res.data.message);
 				navigate("/");
 				setShowLogin(false);
+				setLoginRegisterSwitch("login")
 			}
 			console.log(registerData);
 		} catch (error) {

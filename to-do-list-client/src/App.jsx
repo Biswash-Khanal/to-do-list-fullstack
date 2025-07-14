@@ -44,7 +44,7 @@ const App = () => {
 <Toaster
   position="top-center"
   toastOptions={{
-    duration: 5000,
+    duration: 3000,
     style: {
       background: "#F2BFA4",
       color: "#7B3F00",
@@ -59,7 +59,7 @@ const App = () => {
         background: "#F2BFA4",
         color: "#7B3F00",
       },
-      duration: 5000,
+      duration: 3000,
     },
     error: {
       iconTheme: {
@@ -70,7 +70,7 @@ const App = () => {
         background: "#F2BFA4",
         color: "red",
       },
-      duration: 5000,
+      duration: 3000,
     },
   }}
 />

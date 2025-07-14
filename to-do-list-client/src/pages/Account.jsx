@@ -2,9 +2,9 @@ import React from 'react'
 
 const Account = () => {
   return (
-    <div className='mt-30'>
-      <h1>Your Account</h1>
-      <p>Manage your account settings and preferences here.</p>
+    <div className='mt-30 w-full '>
+      <h1 className='text-center text-2xl'>Your Account</h1>
+      <p className='text-center'>Manage your account settings and preferences here.</p>
     </div>
   )
 }
