@@ -27,7 +27,7 @@ const Login = () => {
 			}
 		} catch (error) {
 			console.log(error)
-			toast.error(error.response?.data?.error);
+			toast.error(error.response?.data?.error || "Something Went Wrong!");
 		}
 	};
 	const handleRegister = async (registerData) => {
@@ -43,7 +43,7 @@ const Login = () => {
 			}
 			console.log(registerData);
 		} catch (error) {
-			toast.error(error.response.data.error);
+			toast.error(error.response?.data?.error || "Something Went Wrong!");
 		}
 	};
 

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import AuthForm from "./AuthForm";
 import InputField from "./InputField";
+import toast from "react-hot-toast";
 
 const LoginForm = ({ onClose, onSwitch, onSubmit }) => {
 	const [formData, setFormData] = useState({
@@ -19,7 +20,11 @@ const LoginForm = ({ onClose, onSwitch, onSubmit }) => {
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
-		onSubmit(formData);
+		try {
+			onSubmit(formData);
+		} catch (error) {
+			toast.error(error.message)
+		}
 	};
 
 	return (
