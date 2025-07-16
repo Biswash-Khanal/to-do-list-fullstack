@@ -11,6 +11,7 @@ const Login = () => {
 		loginRegisterSwitch,
 		setLoginRegisterSwitch,
 		setIsLoggedIn,
+		setLoggedUser
 	} = useAppContext();
 	const navigate = useNavigate();
 
@@ -22,6 +23,7 @@ const Login = () => {
 				console.log("Logged in Successfully");
 				toast.success(res.data.message);
 				setIsLoggedIn(true);
+				setLoggedUser(res.data?.user);
 				navigate("/todos");
 				setShowLogin(false);
 			}

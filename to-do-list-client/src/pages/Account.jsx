@@ -1,18 +1,30 @@
-import React from "react";
+import React, { useState } from "react";
 import { AppContext, useAppContext } from "../context/AppContext";
 import axios from "../api/axios";
+import toast from "react-hot-toast";
 const Account = () => {
 	const { loggedUser, setLoggedUser } = useAppContext();
 
-	let updatedUserInfo = {
-		username:null,
-		password:null
-	}
+	const [updatedUserInfo, setUpdatedUserInfo] = useState({
+		username:"",
+		oldPassword:"",
+		newPassword:""
+	})
 
-	const handleUsernameSubmit = (e)=>{
+	const handleUsernameSubmit = async(e)=>{
 		e.preventDefault();
-		
-		const response = axios.put("/users", )
+		try {
+			
+			const response = await axios.patch("/users/username-edit", {username:updatedUserInfo.username.trim()});
+			
+			if(response.success === true){
+				console.log(response?.data?.message)
+				toast.success(response?.data?.message||"test");
+			}
+		} catch (error) {
+			toast.error(error.response?.data?.error);
+		}
+
 	}
 
 	return (
@@ -40,6 +52,7 @@ const Account = () => {
 							readOnly
 							type="email"
 							name="email"
+							
 							value={loggedUser.email}
 							id="userEmail"
 						/>
@@ -77,10 +90,12 @@ const Account = () => {
 						</label>
 						<input
 							className="border-2 border-font-primary rounded px-3 py-2 w-80"
-							readOnly
+							
 							type="text"
 							name="username"
-							value={loggedUser.username}
+							
+							value={updatedUserInfo.username}
+							onChange={(e)=>setUpdatedUserInfo({username:e.target.value})}
 							id="userUsername"
 						/>
 						<button className="ml-10 border-2 border-font-primary rounded-2xl px-2 py-1 hover:scale-110 hover:bg-primary hover:font-medium cursor-pointer active:text-white">Change</button>

@@ -73,6 +73,7 @@ export const editUserPassword = async (req, res, next) => {
 
 		// Respond with success and logout notice
 		res.status(200).json({
+			success:true,
 			message: "User updated successfully. Please log in again.",
 		});
 	} catch (error) {
@@ -122,8 +123,10 @@ export const editUserName = async (req, res, next) => {
 		// Logout the user (by clearing token cookie)
 		res.clearCookie("token");
 
+		console.log("User updated successfully. Please log in again.")
 		// Respond with success and logout notice
 		res.status(200).json({
+			success:true,
 			message: "User updated successfully. Please log in again.",
 		});
 	} catch (error) {
@@ -157,6 +160,7 @@ export const deleteUser = async (req, res, next) => {
 
 		// Respond with success and logout notice
 		res.status(200).json({
+			success:true,
 			message: "User deleted successfully.",
 		});
 	} catch (error) {
