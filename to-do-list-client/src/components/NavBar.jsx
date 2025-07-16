@@ -29,11 +29,11 @@ const {isScrolled, isMenuOpen, setIsMenuOpen, setIsLoggedIn, IsLoggedIn} = useAp
     return (
         
             
-            <nav className={`fixed top-0 left-0 bg-primary w-full flex items-center justify-between px-4 md:px-16 lg:px-24 xl:px-32 transition-all duration-500 z-50 ${isScrolled ? "bg-secondary shadow-md text-font-primary backdrop-blur-lg py-3 md:py-4" : "py-4 md:py-6"}`}>
+            <nav className={`fixed top-0 left-0 bg-primary w-full flex items-center justify-between px-4 md:px-16 lg:px-24 xl:px-32 transition-all duration-500 z-50 ${isScrolled ? "bg-secondary shadow-md text-font-primary backdrop-blur-lg py-2 md:py-3" : "py-4 md:py-4"}`}>
 
                 {/* Logo */}
                 <Link to="/" className="flex items-center gap-2">
-                    <img src={assets.logo_caption_hor} alt="logo" className={`h-9`} />
+                    <img src={assets.logo_caption_hor} alt="logo" className={`h-10`} />
                 </Link>
 
                 {/* Desktop Nav */}
@@ -50,7 +50,7 @@ const {isScrolled, isMenuOpen, setIsMenuOpen, setIsLoggedIn, IsLoggedIn} = useAp
                 {/* Desktop Right */}
                 <div className="hidden sm:flex items-center gap-4">
                     
-                    <button onClick={handleLogout} className={`${isScrolled?"bg-primary text-font-secondary":"bg-secondary text-font-primary"}  px-8 py-2.5 rounded-full ml-4 transition-all duration-500 hover:scale-110 cursor-pointer`}>
+                    <button onClick={handleLogout} className={`${isScrolled?"bg-primary text-white":"bg-secondary text-primary"}  px-8 py-2.5 rounded-full ml-4 transition-all duration-500 hover:scale-110 cursor-pointer`}>
                         Log-Out
                     </button>
                 </div>

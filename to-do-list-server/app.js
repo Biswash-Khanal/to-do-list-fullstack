@@ -39,7 +39,7 @@ app.get("/", (req, res) => {
 
 app.use(errorMiddleware);
 
-app.listen(PORT || 5000,"0.0.0.0", async () => {
+app.listen(PORT || 5000, async () => {
 	await  connectToDatabase();
     console.log(`Server is running on http://localhost:${PORT || 5000}`);
    
