@@ -17,7 +17,7 @@ const App = () => {
 		<div className="font-bitcount relative bg-secondary min-h-screen overflow-hidden">
 			{showLogin && (
 				<div className="fixed inset-0 z-50 flex items-center justify-center backdrop-blur-2xl bg-primary/520">
-					<Login/>
+					<Login />
 				</div>
 			)}
 			{!isLoggedIn ? (
@@ -41,40 +41,43 @@ const App = () => {
 					</Routes>
 				</>
 			)}
-<Toaster
-  position="top-center"
-  toastOptions={{
-    duration: 3000,
-    style: {
-      background: "#F2BFA4",
-      color: "#7B3F00",
-      fontSize: "16px",
-    },
-    success: {
-      iconTheme: {
-        primary: "green",
-        secondary: "#F2BFA4",
-      },
-      style: {
-        background: "#F2BFA4",
-        color: "#7B3F00",
-      },
-      duration: 3000,
-    },
-    error: {
-      iconTheme: {
-        primary: "red",
-        secondary: "#F2BFA4",
-      },
-      style: {
-        background: "#F2BFA4",
-        color: "red",
-      },
-      duration: 3000,
-    },
-  }}
-/>
+			<Toaster
+				position="top-center"
+				toastOptions={{
+					duration: 1200,
+					style: {
+						background: "#F2BFA4",
+						color: "#7B3F00",
+						fontSize: "16px",
+						textAlign: "center",
+					},
+					success: {
+						iconTheme: {
+							primary: "green",
+							secondary: "#F2BFA4",
+						},
+						style: {
+							background: "#F2BFA4",
+							color: "#7B3F00",
+							textAlign: "center",
+						},
+						duration: 1200,
+					},
+					error: {
+						iconTheme: {
+							primary: "red",
+							secondary: "#F2BFA4",
+						},
+						style: {
+							background: "#F2BFA4",
+							color: "red",
+							textAlign: "center",
 
+						},
+						duration: 2000,
+					},
+				}}
+			/>
 		</div>
 	);
 };

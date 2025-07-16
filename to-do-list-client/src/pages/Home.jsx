@@ -15,7 +15,7 @@ const Home = () => {
 			
 
 
-			Hello {loggedUser.email}
+			Hello {loggedUser.username}
 			
 		</div>
 	);

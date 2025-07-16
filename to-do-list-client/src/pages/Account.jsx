@@ -2,30 +2,65 @@ import React, { useState } from "react";
 import { AppContext, useAppContext } from "../context/AppContext";
 import axios from "../api/axios";
 import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
+import { changeUserDetails, viewUserDetails } from "../assets/assets";
+
 const Account = () => {
-	const { loggedUser, setLoggedUser } = useAppContext();
+	const navigate = useNavigate();
+
+	const { loggedUser } = useAppContext();
 
 	const [updatedUserInfo, setUpdatedUserInfo] = useState({
-		username:"",
-		oldPassword:"",
-		newPassword:""
-	})
+		username: "",
+		oldPassword: "",
+		newPassword: "",
+		confirmPassword: "",
+	});
 
-	const handleUsernameSubmit = async(e)=>{
+	const handlePasswordSubmit = async (e) => {
 		e.preventDefault();
 		try {
-			
-			const response = await axios.patch("/users/username-edit", {username:updatedUserInfo.username.trim()});
-			
-			if(response.success === true){
-				console.log(response?.data?.message)
-				toast.success(response?.data?.message||"test");
+			const response = await axios.patch("/users/password-edit", {
+				oldPassword: updatedUserInfo.oldPassword.trim(),
+				newPassword: updatedUserInfo.newPassword.trim(),
+			});
+
+			if (response.data.success === true) {
+				toast.success(
+					response.data.message + "\n\n Page will refresh in few seconds!"
+				);
+
+				setTimeout(() => {
+					navigate("/");
+					window.location.reload();
+				}, 2000);
 			}
 		} catch (error) {
-			toast.error(error.response?.data?.error);
+			toast.error(error.response?.data?.error || "Some Error Occured");
 		}
+	};
 
-	}
+	const handleUsernameSubmit = async (e) => {
+		e.preventDefault();
+		try {
+			const response = await axios.patch("/users/username-edit", {
+				username: updatedUserInfo.username.trim(),
+			});
+
+			if (response.data.success === true) {
+				toast.success(
+					response.data.message + "\n\n Page will refresh in few seconds!"
+				);
+
+				setTimeout(() => {
+					navigate("/");
+					window.location.reload();
+				}, 2000);
+			}
+		} catch (error) {
+			toast.error(error.response?.data?.error || "Some Error Occured");
+		}
+	};
 
 	return (
 		<>
@@ -38,71 +73,139 @@ const Account = () => {
 
 			<div className="p-5 gap-5 m-5 border-2 border-font-primary rounded-xl flex flex-col text-center  items-center justify-center">
 				<h1 className="w-fit text-5xl font-medium">Account Information</h1>
-
-				<div className="p-5 flex-col flex gap-5 sm:text-xl  ">
-					<div className=" flex items-center justify-end">
-						<label
-							className="font-semibold "
-							htmlFor="userEmail"
+				<form
+					onSubmit={handlePasswordSubmit}
+					className="flex flex-col gap-5 items-center w-full max-w-xl sm:text-xl"
+				>
+					{viewUserDetails.map(({ label, name }) => (
+						<div
+							key={name}
+							className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 w-full"
 						>
-							Email:
-						</label>
-						<input
-							className="border-2 border-font-primary rounded px-3 py-2 sm:w-85"
-							readOnly
-							type="email"
-							name="email"
-							
-							value={loggedUser.email}
-							id="userEmail"
-						/>
-					</div>
+							<label
+								htmlFor={name}
+								className="sm:w-40 font-semibold text-left sm:text-right"
+							>
+								{label}
+							</label>
 
-					<div className=" flex items-center justify-end">
-						<label
-							className="font-semibold "
-							htmlFor="userUsername"
-						>
-							Username:
-						</label>
-						<input
-							className="border-2 border-font-primary rounded px-3 py-2 sm:w-85"
-							readOnly
-							type="text"
-							name="username"
-							value={loggedUser.username}
-							id="userUsername"
-						/>
-					</div>
-				</div>
+							<input
+								id={name}
+								name={name}
+								type="text"
+								className="border-2 border-font-primary rounded px-3 py-2 w-full sm:w-100"
+								value={loggedUser[`${name}`]}
+							/>
+						</div>
+					))}
+				</form>
 			</div>
 
-			<div className="p-5 gap-10 m-5 border-2 border-font-primary rounded-xl flex flex-col text-center  items-center justify-center">
-				<h1 className="w-fit text-5xl font-medium ">Edit Your Info:</h1>
+			<div className="p-5 gap-10 m-5 border-2 border-font-primary rounded-xl flex flex-col text-center items-center justify-center">
+				<h1 className="w-fit text-3xl sm:text-5xl font-medium">
+					Edit Your Info:
+				</h1>
 
-				<div className="p-5 flex-col flex gap-5 sm:text-xl  ">
-					<form onSubmit={handleUsernameSubmit} className=" flex items-center justify-end">
+				<div className="w-full flex items-center justify-center">
+					<div className="flex-grow border-t border-font-primary"></div>
+					<span className="mx-4 text-font-primary font-medium">
+						Change your username:
+					</span>
+					<div className="flex-grow border-t border-font-primary"></div>
+				</div>
+				{/* Username Form */}
+				<form
+					onSubmit={handleUsernameSubmit}
+					className="flex flex-col gap-5 items-center w-full max-w-xl"
+				>
+					<div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 w-full">
 						<label
-							className="font-semibold "
-							htmlFor="userUsername"
+							htmlFor="username"
+							className="sm:w-40 font-semibold text-left sm:text-right"
 						>
 							Username:
 						</label>
-						<input
-							className="border-2 border-font-primary rounded px-3 py-2 w-80"
-							
-							type="text"
-							name="username"
-							
-							value={updatedUserInfo.username}
-							onChange={(e)=>setUpdatedUserInfo({username:e.target.value})}
-							id="userUsername"
-						/>
-						<button className="ml-10 border-2 border-font-primary rounded-2xl px-2 py-1 hover:scale-110 hover:bg-primary hover:font-medium cursor-pointer active:text-white">Change</button>
-					</form>
 
+						<div className="flex flex-col sm:flex-row items-center w-full gap-2">
+							<input
+								id="username"
+								name="username"
+								type="text"
+								placeholder="Enter new username"
+								className="border-2 border-font-primary rounded px-3 py-2 w-full sm:w-80"
+								value={updatedUserInfo.username}
+								onChange={(e) =>
+									setUpdatedUserInfo((prev) => ({
+										...prev,
+										username: e.target.value,
+									}))
+								}
+							/>
+
+							<button
+								type="submit"
+								className="border-2 border-font-primary rounded-2xl px-4 py-2 hover:scale-110 hover:bg-primary hover:font-medium cursor-pointer active:text-white sm:ml-4"
+							>
+								Change
+							</button>
+						</div>
+					</div>
+				</form>
+
+				<div className="w-full flex items-center justify-center">
+					<div className="flex-grow border-t border-font-primary"></div>
+					<span className="mx-4 text-font-primary font-medium">
+						OR, change the password:
+					</span>
+					<div className="flex-grow border-t border-font-primary"></div>
 				</div>
-				
+
+				{/* Password Form */}
+				<form
+					onSubmit={handlePasswordSubmit}
+					className="flex flex-col gap-5 items-center w-full max-w-xl"
+				>
+					{changeUserDetails.map(({ label, name, placeholder }, idx, arr) => (
+						<div
+							key={name}
+							className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 w-full"
+						>
+							<label
+								htmlFor={name}
+								className="sm:w-40 font-semibold text-left sm:text-right"
+							>
+								{label}
+							</label>
+
+							<div className="flex flex-col sm:flex-row items-center w-full gap-2">
+								<input
+									id={name}
+									name={name}
+									type="password"
+									placeholder={placeholder}
+									className="border-2 border-font-primary rounded px-3 py-2 w-full sm:w-80"
+									value={updatedUserInfo[name] || ""}
+									onChange={(e) =>
+										setUpdatedUserInfo((prev) => ({
+											...prev,
+											[name]: e.target.value,
+										}))
+									}
+								/>
+
+								{/* Only show the "Change" button beside the last field */}
+								{idx === arr.length - 1 && (
+									<button
+										type="submit"
+										className="border-2 border-font-primary rounded-2xl px-4 py-2 hover:scale-110 hover:bg-primary hover:font-medium cursor-pointer active:text-white sm:ml-4"
+									>
+										Change
+									</button>
+								)}
+							</div>
+						</div>
+					))}
+				</form>
 			</div>
 		</>
 	);

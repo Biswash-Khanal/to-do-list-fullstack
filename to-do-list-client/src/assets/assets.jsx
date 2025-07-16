@@ -10,6 +10,42 @@ export const assets = {
 	logo_full,
 };
 
+
+export const changeUserDetails = 
+	[
+    {
+      label: "Old Password:",
+      name: "oldPassword",
+      placeholder: "Enter current password",
+    },
+    {
+      label: "New Password:",
+      name: "newPassword",
+      placeholder: "Enter new password",
+    },
+    {
+      label: "Confirm Password:",
+      name: "confirmPassword",
+      placeholder: "Enter new password again",
+    },
+	]
+
+export const viewUserDetails = 
+	[
+    {
+      label: "E-mail:",
+      name: "email",
+	  
+
+    },
+    {
+      label: "Username:",
+      name: "username",
+
+    },
+
+	]
+
 export const modalText = {
 	add: {
 		title: "Please Enter Details!",
