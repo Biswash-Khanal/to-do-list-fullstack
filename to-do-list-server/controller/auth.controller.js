@@ -57,7 +57,7 @@ export const registerUser = async (req, res, next) => {
 
 export const loginUser = async (req, res, next) => {
 	try {
-		const { username, password } = req.body;
+		const { username, password, rememberMe = false } = req.body;
 		if (!username || !password) {
 			throw new AppError("Username and password are required", 400);
 		}
@@ -78,16 +78,25 @@ export const loginUser = async (req, res, next) => {
 		}
 
 		//jwt token generation
+		//cond1 if remember me was selected
+		const tokenExpiry = rememberMe ? "7d" : "3h";
 		const token = jwt.sign({ tokenId: existingUser._id }, JWT_SECRET, {
-			expiresIn: "1h",
+			expiresIn: tokenExpiry,
 		});
-
-		res.cookie("token", token, {
-			httpOnly: true,
-			secure: NODE_ENV === "production",
-			sameSite: "strict",
-			maxAge: 1*60*60*1000, // 1 hour
-		});
+		if (rememberMe) {
+			res.cookie("token", token, {
+				httpOnly: true,
+				secure: NODE_ENV === "production",
+				sameSite: "strict",
+				maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
+			});
+		} else{
+			res.cookie("token", token, {
+				httpOnly: true,
+				secure: NODE_ENV === "production",
+				sameSite: "strict",
+			});
+		}
 
 		return res.status(200).json({
 			success: true,
@@ -116,22 +125,22 @@ export const logoutUser = async (req, res, next) => {
 	}
 };
 
-
-export const verifyUser = async(req, res, next)=>{
-		try {
-			const userId = req.authorizedId;
-			const user = await  User.findById(userId).select("-password")
-			if(user){
-				res.status(200).json({
-					success:true,
-					user:user
-				})
-			}
-			else{
-				throw new AppError("Token expired, or some other error occured :(. Please Sign-In again", 409);
-			}
-			
-		} catch (error) {
-			next(error);
+export const verifyUser = async (req, res, next) => {
+	try {
+		const userId = req.authorizedId;
+		const user = await User.findById(userId).select("-password");
+		if (user) {
+			res.status(200).json({
+				success: true,
+				user: user,
+			});
+		} else {
+			throw new AppError(
+				"Token expired, or some other error occured :(. Please Sign-In again",
+				409
+			);
 		}
-}
+	} catch (error) {
+		next(error);
+	}
+};

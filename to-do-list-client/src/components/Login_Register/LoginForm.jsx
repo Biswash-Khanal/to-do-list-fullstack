@@ -7,6 +7,7 @@ const LoginForm = ({ onClose, onSwitch, onSubmit }) => {
 	const [formData, setFormData] = useState({
 		username: "",
 		password: "",
+		rememberMe: false,
 	});
 
 	const handleInputChange = (e) => {
@@ -23,7 +24,7 @@ const LoginForm = ({ onClose, onSwitch, onSubmit }) => {
 		try {
 			onSubmit(formData);
 		} catch (error) {
-			toast.error(error.message)
+			toast.error(error.message);
 		}
 	};
 
@@ -77,6 +78,17 @@ const LoginForm = ({ onClose, onSwitch, onSubmit }) => {
 							className="appearance-none w-5 h-5 border-2 border-[#7B3F00] rounded-md checked:bg-[#7B3F00] checked:border-[#7B3F00] focus:outline-none cursor-pointer"
 							type="checkbox"
 							id="checkbox"
+							checked={formData.rememberMe} 
+							name="rememberMe"
+							onChange={(e) =>
+								setFormData((prev) => {
+									return {
+										...prev,
+
+										[e.target.name]: e.target.checked,//
+									};
+								})
+							}
 						/>
 						<label
 							className="text-sm cursor-pointer"
