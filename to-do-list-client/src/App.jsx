@@ -1,14 +1,17 @@
 import React from "react";
-import NavBar from "./components/NavBar";
-import Home from "./pages/Home";
-import { Toaster } from "react-hot-toast";
-import Landing from "./pages/Landing";
-import { useAppContext } from "./context/AppContext";
+import { Routes, Route, Navigate } from "react-router-dom";
 
-import { Routes, Route } from "react-router-dom";
+import NavBar from "./components/NavBar";
 import Login from "./components/Login_Register/Login";
+import Landing from "./pages/Landing";
 import Account from "./pages/Account";
 import Todos from "./pages/Todos";
+import Error404 from "./pages/Error404";
+
+import { Toaster } from "react-hot-toast";
+import { useAppContext } from "./context/AppContext";
+import PrivateRoute from "./components/PrivateRoutes";
+
 
 const App = () => {
 	const { isLoggedIn, showLogin } = useAppContext();
@@ -20,27 +23,52 @@ const App = () => {
 					<Login />
 				</div>
 			)}
-			{!isLoggedIn ? (
-				<Landing />
-			) : (
-				<>
-					<NavBar />
-					<Routes>
-						<Route
-							path="/"
-							element={<Home />}
-						/>
-						<Route
-							path="/account"
-							element={<Account />}
-						/>
-						<Route
-							path="/todos"
-							element={<Todos />}
-						/>
-					</Routes>
-				</>
-			)}
+
+			<Routes>
+				{/* If not logged in: show Landing, else redirect to /todos */}
+				<Route
+					path="/"
+					element={
+						isLoggedIn ? (
+							<Navigate to="/todos" replace />
+						) : (
+							<Landing />
+						)
+					}
+				/>
+
+				{/* Protected Routes */}
+				<Route
+					path="/account"
+					element={
+						<PrivateRoute>
+							<NavBar />
+							<Account />
+						</PrivateRoute>
+					}
+				/>
+				<Route
+					path="/todos"
+					element={
+						<PrivateRoute>
+							<NavBar />
+							<Todos />
+						</PrivateRoute>
+					}
+				/>
+
+				{/* 404 Page for unknown routes */}
+				<Route
+					path="*"
+					element={
+						<PrivateRoute>
+							<NavBar />
+							<Error404 />
+						</PrivateRoute>
+					}
+				/>
+			</Routes>
+
 			<Toaster
 				position="top-center"
 				toastOptions={{
@@ -72,7 +100,6 @@ const App = () => {
 							background: "#F2BFA4",
 							color: "red",
 							textAlign: "center",
-
 						},
 						duration: 2000,
 					},
