@@ -1,9 +1,13 @@
 import mongoose from "mongoose";
-import { JWT_SECRET, NODE_ENV } from "../config/env.js";
+import { GOOGLE_CLIENT_ID, JWT_SECRET, NODE_ENV } from "../config/env.js";
 import User from "../model/user.model.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import AppError from "../utils/AppError.js";
+import { OAuth2Client } from "google-auth-library";
+
+
+const client = new OAuth2Client(GOOGLE_CLIENT_ID);
 
 export const registerUser = async (req, res, next) => {
 	const registerSession = await mongoose.startSession();
@@ -90,7 +94,7 @@ export const loginUser = async (req, res, next) => {
 				sameSite: "strict",
 				maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
 			});
-		} else{
+		} else {
 			res.cookie("token", token, {
 				httpOnly: true,
 				secure: NODE_ENV === "production",
@@ -105,6 +109,79 @@ export const loginUser = async (req, res, next) => {
 				id: existingUser._id,
 				username: existingUser.username,
 				email: existingUser.email,
+			},
+		});
+	} catch (error) {
+		console.error("Error logging in user:", error);
+		next(error);
+	}
+};
+
+export const googleLoginUser = async (req, res, next) => {
+	try {
+		const { token, rememberMe } = req.body;
+
+		const ticket = await client.verifyIdToken({
+			idToken: token,
+			audience: GOOGLE_CLIENT_ID,
+		});
+
+		const payload = ticket.getPayload();
+		const { email, name } = payload;
+
+		let user = await User.findOne({ email });
+
+		if (user && !user.isGoogleAccount) {
+			throw new AppError(
+				"This email has been used to setup a local account. Please log in through it instead!",
+				400
+			);
+		}
+		if (!user) {
+			let baseUsername = name.toLowerCase().replace(/\s+/g, "_");
+			let username = baseUsername;
+			let counter = 1;
+
+			while (await User.exists({ username })) {
+				username = `${baseUsername}_${counter++}`;
+			}
+
+			user = await User.create({
+				username,
+				email,
+				isGoogleAccount: true,
+			});
+
+			user = await User.findOne({ email });
+		}
+
+		const tokenExpiry = rememberMe ? "7d" : "3h";
+		const jwttoken = jwt.sign({ tokenId: user._id }, JWT_SECRET, {
+			expiresIn: tokenExpiry,
+		});
+
+		if (rememberMe) {
+			res.cookie("token", jwttoken, {
+				httpOnly: true,
+				secure: NODE_ENV === "production",
+				sameSite: "strict",
+				maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
+			});
+		} else {
+			res.cookie("token", jwttoken, {
+				httpOnly: true,
+				secure: NODE_ENV === "production",
+				sameSite: "strict",
+			});
+		}
+
+		return res.status(200).json({
+			success: true,
+			message: "User logged in successfully",
+			user: {
+				id: user._id,
+				username: user.username,
+				email: user.email,
 			},
 		});
 	} catch (error) {

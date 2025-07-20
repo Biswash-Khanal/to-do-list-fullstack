@@ -5,13 +5,16 @@ import './index.css'
 
 import App from './App.jsx';
 import { AppContextProvider } from './context/AppContextProvider.jsx';
+import {GoogleOAuthProvider} from "@react-oauth/google"
 
 createRoot(document.getElementById('root')).render(
   
-    <BrowserRouter>
-    <AppContextProvider>
-    <App />
-    </AppContextProvider>
-    </BrowserRouter>
+	<GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID}>
+		<BrowserRouter>
+			<AppContextProvider>
+				<App />
+			</AppContextProvider>
+		</BrowserRouter>
+	</GoogleOAuthProvider>
   
 )

@@ -2,13 +2,55 @@ import { useState } from "react";
 import AuthForm from "./AuthForm";
 import InputField from "./InputField";
 import toast from "react-hot-toast";
+import { GoogleLogin } from "@react-oauth/google";
+import axios from "../../api/axios";
+import { useAppContext } from "../../context/AppContext";
+import { useNavigate } from "react-router-dom";
 
 const LoginForm = ({ onClose, onSwitch, onSubmit }) => {
+
+	const navigate = useNavigate();
 	const [formData, setFormData] = useState({
 		username: "",
 		password: "",
 		rememberMe: false,
 	});
+
+	const { setShowLogin, setIsLoggedIn, setLoggedUser } =
+		useAppContext();
+
+	const googleLoginSuccess = async (credentialResponse) => {
+		try {
+			const idToken = credentialResponse.credential; // This is the JWT ID token
+
+			const response = await axios.post("/auth/login-google", {
+				token: idToken,
+				rememberMe: formData.rememberMe,
+			});
+
+			if (response.data.success) {
+				console.log("User logged in:", response.data.user);
+				toast.success(response.data.message);
+				setIsLoggedIn(true);
+				setLoggedUser(response.data?.user);
+				navigate("/todos");
+				setShowLogin(false);
+			} else {
+				toast.error(response.data.error || "Login failed");
+			}
+		} catch (error) {
+			console.error(
+				"Google login failed:",
+				error.response?.data || error.message
+			);
+			toast.error("Google login failed");
+		}
+	};
+
+	const googleLoginError = () => {
+		console.error("Google login was cancelled or failed.");
+		// You can show a toast or other UI feedback here if you want
+	};
 
 	const handleInputChange = (e) => {
 		setFormData((prev) => {
@@ -36,15 +78,10 @@ const LoginForm = ({ onClose, onSwitch, onSubmit }) => {
 			switchText="Don’t have an account?"
 			onSwitch={onSwitch}
 		>
-			<button
-				type="button"
-				className="border border-font-primary md:w-96 w-80 mt-8 bg-primary flex items-center justify-center h-12 rounded-full cursor-pointer hover:bg-font-primary hover:text-primary transition-all"
-			>
-				<img
-					src="https://raw.githubusercontent.com/prebuiltui/prebuiltui/main/assets/login/googleLogo.svg"
-					alt="googleLogo"
-				/>
-			</button>
+			<GoogleLogin
+				onSuccess={googleLoginSuccess}
+				onError={googleLoginError}
+			/>
 			<form
 				onSubmit={handleSubmit}
 				className="md:w-96 w-80 flex flex-col items-center justify-center"
@@ -78,14 +115,14 @@ const LoginForm = ({ onClose, onSwitch, onSubmit }) => {
 							className="appearance-none w-5 h-5 border-2 border-[#7B3F00] rounded-md checked:bg-[#7B3F00] checked:border-[#7B3F00] focus:outline-none cursor-pointer"
 							type="checkbox"
 							id="checkbox"
-							checked={formData.rememberMe} 
+							checked={formData.rememberMe}
 							name="rememberMe"
 							onChange={(e) =>
 								setFormData((prev) => {
 									return {
 										...prev,
 
-										[e.target.name]: e.target.checked,//
+										[e.target.name]: e.target.checked, //
 									};
 								})
 							}

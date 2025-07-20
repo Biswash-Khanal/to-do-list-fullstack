@@ -74,7 +74,7 @@ const Account = () => {
 			<div className="p-5 gap-5 m-5 border-2 border-font-primary rounded-xl flex flex-col text-center  items-center justify-center">
 				<h1 className="w-fit text-5xl font-medium">Account Information</h1>
 				<form
-					onSubmit={handlePasswordSubmit}
+					
 					className="flex flex-col gap-5 items-center w-full max-w-xl sm:text-xl"
 				>
 					{viewUserDetails.map(({ label, name }) => (
@@ -90,11 +90,12 @@ const Account = () => {
 							</label>
 
 							<input
-								id={name}
+								
 								name={name}
 								type="text"
 								className="border-2 border-font-primary rounded px-3 py-2 w-full sm:w-100"
 								value={loggedUser[`${name}`]}
+								readOnly
 							/>
 						</div>
 					))}
