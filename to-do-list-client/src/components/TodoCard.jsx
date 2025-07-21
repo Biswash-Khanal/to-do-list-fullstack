@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import axios from "../api/axios";
 import { icons } from "../assets/assets";
 import  {Button, ButtonToggle } from "./Button";
+import { useAppContext } from "../context/AppContext";
 
 const TodoCard = ({
 	todo = {},
@@ -12,6 +13,8 @@ const TodoCard = ({
 }) => {
 	const [isCompleted, setIsCompleted] = useState(todo.completed);
 	const [isLoading, setIsLoading] = useState(false);
+
+	const {isScrolled} = useAppContext();
 
 	const toggleCompleted = async () => {
 		try {
@@ -48,7 +51,7 @@ const TodoCard = ({
 	}
 
 	return isActualCard ? (
-<div className="bg-primary/30 backdrop-blur-2xl border-2 border-font-secondary shadow-xl shadow-b rounded-lg p-6 mx-5 flex items-center justify-between w-sm sm:w-2xl md:w-3xl lg:w-4xl transition-all duration-300 gap-5 ">
+<div className={`${isScrolled?"bg-secondary/70":"bg-primary/30"} backdrop-blur-2xl border-2 border-font-secondary shadow-xl shadow-b rounded-lg p-6 mx-5 flex items-center justify-between w-sm sm:w-2xl md:w-3xl lg:w-4xl transition-all duration-1000 gap-5 `}>
 	{/* Edit Button */}
 	<Button icon={icons.editIcon} onClick={handleEdit} />
 
@@ -71,7 +74,7 @@ const TodoCard = ({
 </div>
 
 	) : (
-		<div onClick={handleCreate} className=" bg-primary/30 backdrop-blur-2xl border-2 border-green-500 shadow-md rounded-lg p-6 mx-5 flex items-center justify-center w-sm sm:w-2xl md:w-3xl lg:w-4xl transition-all duration-300 cursor-pointer hover:scale-95 text-green-400 ">
+		<div onClick={handleCreate} className={`${isScrolled?"bg-secondary/70":"bg-primary/30"} backdrop-blur-2xl border-2 border-font-secondary shadow-xl shadow-b rounded-lg p-6 mx-5 flex items-center w-sm sm:w-2xl md:w-3xl lg:w-4xl transition-all duration-1000 gap-5 hover:scale-95 cursor-pointer justify-center`}>
 			<div className="flex flex-col gap-2 text-green-400 ">
 				<h1 className="text-2xl font-semibold text-green-400  text-shadow-2xs">
 					Click here to add a new Todo.......

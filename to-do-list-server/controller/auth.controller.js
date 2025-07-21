@@ -72,6 +72,10 @@ export const loginUser = async (req, res, next) => {
 			throw new AppError("User not found, Please register first", 404);
 		}
 
+		if(existingUser.isGoogleAccount){
+			throw new AppError("This username is registered with a google account, please use the google sign in option!")
+		}
+
 		const isPasswordCorrect = await bcrypt.compare(
 			password,
 			existingUser.password
@@ -213,7 +217,7 @@ export const verifyUser = async (req, res, next) => {
 			});
 		} else {
 			throw new AppError(
-				"Token expired, or some other error occured :(. Please Sign-In again",
+				"Token expired, or some other error occured :(. \nPlease Sign-In again",
 				409
 			);
 		}
