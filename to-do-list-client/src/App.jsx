@@ -24,7 +24,7 @@ const App = () => {
 		<>
 {/*login modal */}
 			{showLogin && (
-				<div className="fixed inset-0 z-50 flex items-center justify-center backdrop-blur-2xl bg-primary/50">
+				<div className="font-bitcount fixed inset-0 z-50 flex items-center justify-center backdrop-blur-2xl bg-primary/50">
 					<Login />
 				</div>
 			)}
