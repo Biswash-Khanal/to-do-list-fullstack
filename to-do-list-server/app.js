@@ -18,12 +18,16 @@ import errorMiddleware from "./middleware/error.middleware.js";
 
 const app = express();
 
+
+await  connectToDatabase();
+
 app.use(
 	cors({
 		origin: CLIENT_URL,
 		credentials: true,
 	})
 )
+
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -40,7 +44,7 @@ app.get("/", (req, res) => {
 app.use(errorMiddleware);
 
 app.listen(PORT || 5000, async () => {
-	await  connectToDatabase();
+	
     console.log(`Server is running on http://localhost:${PORT || 5000}`);
    
 });
