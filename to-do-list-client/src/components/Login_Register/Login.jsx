@@ -30,6 +30,7 @@ const Login = () => {
 		} catch (error) {
 			console.log(error)
 			toast.error(error.response?.data?.error || "Something Went Wrong!");
+			toast.error( "Something Went Wrong!");
 		}
 	};
 	const handleRegister = async (registerData) => {

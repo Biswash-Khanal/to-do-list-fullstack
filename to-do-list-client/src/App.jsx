@@ -75,7 +75,9 @@ const App = () => {
 					/>
 				</Routes>
 
-				<Toaster
+				
+			</div>
+			<Toaster
 					position="top-center"
 					toastOptions={{
 						duration: 1200,
@@ -111,7 +113,6 @@ const App = () => {
 						},
 					}}
 				/>
-			</div>
 		</>
 	);
 };
