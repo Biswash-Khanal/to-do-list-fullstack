@@ -8,6 +8,8 @@ if(!MONGO_URI){
 
 const connectToDatabase = async () => {
     try {
+        console.log("⭑ MONGO_URI:", process.env.MONGO_URI?.slice(0,50) + "…");
+
         await mongoose.connect(MONGO_URI)
         console.log(`Connected to MongoDB in ${NODE_ENV} mode`);
     } catch (error) {
