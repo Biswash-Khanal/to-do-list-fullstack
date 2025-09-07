@@ -1,3 +1,4 @@
+//request and response handlers for authorization related program
 import mongoose from "mongoose";
 import { GOOGLE_CLIENT_ID, JWT_SECRET, NODE_ENV } from "../config/env.js";
 import User from "../model/user.model.js";
